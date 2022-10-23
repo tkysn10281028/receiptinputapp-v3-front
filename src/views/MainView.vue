@@ -3,7 +3,7 @@
     <h1>Hello World</h1>
     <p>input your data here</p>
     <input type="text" v-model="testText" />
-    <button @click="send">送信</button>
+    <button @click="send">送信する</button>
   </div>
 </template>
 <script>
