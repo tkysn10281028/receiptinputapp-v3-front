@@ -1,7 +1,7 @@
 <template>
   <div id="main">
     <h1>Hello World</h1>
-    <p>input your data here.</p>
+    <p>input your data here</p>
     <input type="text" v-model="testText" />
     <button @click="send">送信</button>
   </div>
