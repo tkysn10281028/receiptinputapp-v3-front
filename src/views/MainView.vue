@@ -1,0 +1,28 @@
+<template>
+  <div id="main">
+    <h1>Hello World</h1>
+    <p>input your data here.</p>
+    <input type="text" v-model="testText" />
+    <button @click="send">送信</button>
+  </div>
+</template>
+<script>
+export default {
+  created: function () {},
+  data() {
+    return {
+      testText: "",
+    };
+  },
+  methods: {
+    send: function () {
+      console.log(this.testText);
+    },
+  },
+};
+</script>
+<style>
+#main {
+  justify-content: center;
+}
+</style>
