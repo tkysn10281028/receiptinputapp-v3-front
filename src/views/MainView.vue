@@ -11,7 +11,7 @@ export default {
   created: function () {},
   data() {
     return {
-      testText: "",
+      testText: "入力してください",
     };
   },
   methods: {
