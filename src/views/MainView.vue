@@ -5,6 +5,7 @@
     <p>password:<input type="password" v-model="password" /></p>
     <button @click="login">Login!</button><br />
     <button @click="logout">Logout</button><br />
+    <input type="text" v-model="searchWord" />
     <button @click="search">Search</button>
   </div>
 </template>
@@ -15,6 +16,8 @@ export default {
     return {
       emailaddress: "",
       password: "",
+      searchWord: "",
+      token: "",
     };
   },
   methods: {
@@ -24,13 +27,26 @@ export default {
       params.append("emailaddress", this.emailaddress);
       params.append("password", this.password);
       this.axios
+        .post(url, params, this.serverPass + "login")
+        .then((response) => {
+          console.log(response);
+          this.token = response.headers.authorization;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    logout: function () {
+      const url = location.origin + "/api/v1/deleteTokenIdForLogOut";
+      const params = new URLSearchParams();
+      console.log(this.token);
+      this.axios
         .post(
           url,
           params,
           {
             headers: {
-              Authorization:
-                "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0a3lzbjEwMjhAZ21haWwuY29tIiwiaXNzIjoiY29tLnNvbm8ubXliYXRjaCIsImlhdCI6MTY2NzcxOTczOCwiZXhwIjoxNjY4MzI0NTM4fQ.ISCX9j6isOda5LgTD6hAkMgpo1ijYCZ0_zRez1xNlvg",
+              Authorization: this.token,
             },
           },
           this.serverPass + "login"
@@ -42,22 +58,18 @@ export default {
           console.log(error);
         });
     },
-    logout: function () {
-      const url = location.origin + "/api/v1/logout";
-      this.axios.get(url).then((response) => console.log(response));
-    },
     search: function () {
       const url = location.origin + "/api/v1/getResultBySearchWord";
       const params = new URLSearchParams();
-      params.append("searchWord", "search");
+      console.log(this.token);
+      params.append("searchWord", this.searchWord);
       this.axios
         .post(
           url,
           params,
           {
             headers: {
-              Authorization:
-                "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0a3lzbjEwMjhAZ21haWwuY29tIiwiaXNzIjoiY29tLnNvbm8ubXliYXRjaCIsImlhdCI6MTY2NzcxOTczOCwiZXhwIjoxNjY4MzI0NTM4fQ.ISCX9j6isOda5LgTD6hAkMgpo1ijYCZ0_zRez1xNlvg",
+              Authorization: this.token,
             },
           },
           this.serverPass + "login"
